@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
 const stopModel = mongoose.Schema({
-    stopName : String,
-    arrivalTime : String,
-    despatureTime : String,
-})
+    stopName: String,
+    arrivalTime: String,
+    departureTime: String,   
+});
 
 const busModel = mongoose.Schema({
-    numberPlate : String,
-    startPoint : String,
-    endPoint : String,
-    stopes : [stopModel]
-})
+    numberPlate: String,
+    startPoint: String,
+    endPoint: String,
+    stops: [stopModel]       
+});
 
-module.exports = mongoose.model("bus" , busModel)
+module.exports = mongoose.model("Bus" , busModel)
