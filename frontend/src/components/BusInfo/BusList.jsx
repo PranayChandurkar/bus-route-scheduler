@@ -27,7 +27,7 @@ const BusList = () => {
             <Link to={`/timetable/${bus._id}`} className="flex justify-between items-center p-4 border rounded-xl hover:bg-gray-100 transition">
                 <div key={bus.busNumber}>
                   <p className="text-blue-600 font-semibold">{bus.numberPlate}</p>
-                  <p className="text-sm text-gray-600">{bus.stopes[0].stopName} → {bus.stopes[bus.stopes.length - 1].stopName}</p>
+                  <p className="text-sm text-gray-600">{bus.stops[0].stopName} → {bus.stops[bus.stops.length - 1].stopName}</p>
                 </div>
                 <span className="text-blue-500 text-lg">➝</span>
             </Link>

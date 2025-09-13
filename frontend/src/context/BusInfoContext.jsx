@@ -7,7 +7,7 @@ const tempInfo = [
     "numberPlate": "Bus 25",
     "startPoint": "Badnera",
     "endPoint": "Kathora",
-    "stopes": [
+    "stops": [
       { "stopName": "Badnera", "arrivalTime": "07:00", "despatureTime": "07:00" },
       { "stopName": "City Market", "arrivalTime": "07:20", "despatureTime": "07:22" },
       { "stopName": "Shegao Na", "arrivalTime": "07:40", "despatureTime": "07:42" },
@@ -19,7 +19,7 @@ const tempInfo = [
     "numberPlate": "Bus 12A",
     "startPoint": "Badnera",
     "endPoint": "Navsari",
-    "stopes": [
+    "stops": [
       { "stopName": "Badnera", "arrivalTime": "07:00", "despatureTime": "07:00" },
       { "stopName": "City Market", "arrivalTime": "07:20", "despatureTime": "07:22" },
       { "stopName": "Shegao Na", "arrivalTime": "07:40", "despatureTime": "07:42" },
@@ -31,7 +31,7 @@ const tempInfo = [
     "numberPlate": "Bus 42",
     "startPoint": "Amravati University",
     "endPoint": "Old Cotton Market",
-    "stopes": [
+    "stops": [
       { "stopName": "Badnera", "arrivalTime": "07:00", "despatureTime": "07:00" },
       { "stopName": "City Market", "arrivalTime": "07:20", "despatureTime": "07:22" },
       { "stopName": "Shegao Na", "arrivalTime": "07:40", "despatureTime": "07:42" },
@@ -43,7 +43,7 @@ const tempInfo = [
     "numberPlate": "Bus 77",
     "startPoint": "Badnera",
     "endPoint": "Kathora",
-    "stopes": [
+    "stops": [
       { "stopName": "Badnera", "arrivalTime": "07:00", "despatureTime": "07:00" },
       { "stopName": "City Market", "arrivalTime": "07:20", "despatureTime": "07:22" },
       { "stopName": "Shegao Na", "arrivalTime": "07:40", "despatureTime": "07:42" },
@@ -55,7 +55,7 @@ const tempInfo = [
     "numberPlate": "Bus 08",
     "startPoint": "Sai Nagar",
     "endPoint": "Walgaon Road",
-    "stopes": [
+    "stops": [
       { "stopName": "Badnera", "arrivalTime": "07:00", "despatureTime": "07:00" },
       { "stopName": "City Market", "arrivalTime": "07:20", "despatureTime": "07:22" },
       { "stopName": "Shegao Na", "arrivalTime": "07:40", "despatureTime": "07:42" },
@@ -67,7 +67,7 @@ const tempInfo = [
     "numberPlate": "Bus 33B",
     "startPoint": "Murtizapur Road",
     "endPoint": "New Bus Stand",
-    "stopes": [
+    "stops": [
       { "stopName": "Badnera", "arrivalTime": "07:00", "despatureTime": "07:00" },
       { "stopName": "City Market", "arrivalTime": "07:20", "despatureTime": "07:22" },
       { "stopName": "Shegao Na", "arrivalTime": "07:40", "despatureTime": "07:42" },
@@ -83,23 +83,23 @@ export const BusInfoContext = createContext();
 export const BusInfoProvider = ({ children }) => {
   const [busInfo, setBusInfo] = useState([]);
 
-  // const fetchBusInfo = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/bus/get-all-buses");
-  //     console.log(response.data.buses);
-  //     setBusInfo(response.data.buses);
-  //   } catch (error) {
-  //     console.error("Error fetching bus info:", error);
-  //   }
-  // };
+  const fetchBusInfo = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/bus/get-all-buses");
+      console.log(response.data.buses);
+      setBusInfo(response.data.buses);
+    } catch (error) {
+      console.error("Error fetching bus info:", error);
+    }
+  };
 
   useEffect(() => {
     setBusInfo(tempInfo);
   }, []);
 
-  // useEffect(() => {
-  //   fetchBusInfo();
-  // }, []);
+  useEffect(() => {
+    fetchBusInfo();
+  }, []);
   return (
     <BusInfoContext.Provider value={{ busInfo, setBusInfo }}>
       {children}

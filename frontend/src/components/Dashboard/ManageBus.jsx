@@ -2,11 +2,19 @@ import React, { useContext } from 'react'
 import { Pencil, Trash2 } from "lucide-react";
 import { BusInfoContext } from '../../context/BusInfoContext';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ManageBus = () => {
 
     const { busInfo } = useContext(BusInfoContext)
-    console.log(busInfo);
+
+    const handleDeleteBus = async (busId) => {
+        console.log(busId);
+        
+        const deletBus = await axios.delete(`http://localhost:3000/bus/delete-bus/${busId}`);
+
+        console.log("Delete bus with ID:", deletBus);
+    }
 
     return (
         <div className="bg-white rounded-lg shadow p-6">
@@ -27,8 +35,6 @@ const ManageBus = () => {
                         <tr className="border-b text-gray-600">
                             <th className="py-3 px-4">Bus Number Plate</th>
                             <th className="py-3 px-4">Assigned Route</th>
-                            <th className="py-3 px-4">Capacity</th>
-                            <th className="py-3 px-4">Status</th>
                             <th className="py-3 px-4">Actions</th>
                         </tr>
                     </thead>
@@ -37,30 +43,17 @@ const ManageBus = () => {
                             <tr key={index} className="border-b hover:bg-gray-50">
                                 <td className="py-3 px-4">{bus.numberPlate}</td>
                                 <td className="py-3 px-4">{bus.startPoint}</td>
-                                <td className="py-3 px-4">{bus.capacity}</td>
-                                <td className="py-3 px-4">
-                                    <span
-                                        className={`px-3 py-1 rounded-full text-sm ${bus.status === "Active"
-                                                ? "bg-green-100 text-green-700"
-                                                : bus.status === "Inactive"
-                                                    ? "bg-gray-100 text-gray-700"
-                                                    : "bg-red-100 text-red-700"
-                                            }`}
-                                    >
-                                        {bus.status}
-                                    </span>
-                                </td>
                                 <td className="py-3 px-4 flex gap-3">
                                     <Link to={`/admin/buses/edit/${bus._id}`}  >
                                         <button className="text-blue-600 hover:text-blue-800">
                                             <Pencil size={18} />
                                         </button>
                                     </Link>
-                                    <Link to={`/admin/buses/delete/${bus._id}`}  >
-                                        <button className="text-red-600 hover:text-red-800">
+                                        <button className="text-red-600 hover:text-red-800 "
+                                            onClick={() => handleDeleteBus(bus._id)}
+                                        >
                                             <Trash2 size={18} />
                                         </button>
-                                    </Link>
                                 </td>
                             </tr>
                         ))}

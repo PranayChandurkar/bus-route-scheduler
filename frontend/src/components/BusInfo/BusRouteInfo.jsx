@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { BusInfoContext } from '../../context/BusInfoContext';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -7,11 +8,19 @@ import { BusInfoContext } from '../../context/BusInfoContext';
     
 const BusRouteInfo = () => {
   const { busInfo } = useContext(BusInfoContext)
+  const {busId} = useParams()
 
+  // const fetchRoute = async () => {
+  //   const
+  // }
+
+  const selectedBus = busInfo.find(bus => bus._id === busId);
+  
   if (!busInfo || busInfo.length === 0) {
-  return <p>Loading bus data...</p>;
-}
-  const stops = busInfo[0].stopes.map((stop) => ({
+    return <p>Loading bus data...</p>;
+  }
+
+  const stops = selectedBus.stops.map((stop) => ({
     name: stop.stopName,
     arrival: stop.arrivalTime,
     departure: stop.despatureTime
