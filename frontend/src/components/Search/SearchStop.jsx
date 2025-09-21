@@ -1,11 +1,23 @@
 import React, { useState } from "react";
 
-const SearchStop = () => {
+const SearchStop = ({ stops = [], onSearch }) => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
+  const handleSearch = () => {
+    if (!from || !to) {
+      alert("Please select both From and To stops.");
+      return;
+    }
+    if (from === to) {
+      alert("From and To cannot be the same stop.");
+      return;
+    }
+    onSearch(from, to); // Pass to parent
+  };
+
   return (
-    <div className="flex flex-col items-center bg-gray-100 p-10">
+    <div className="flex flex-col items-center bg-gray-100 p-10 rounded-lg shadow-md">
       {/* From → To row */}
       <div className="flex items-center gap-6 mb-6">
         {/* From Stop */}
@@ -17,10 +29,11 @@ const SearchStop = () => {
             className="px-6 py-3 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Start Stop</option>
-            <option value="op1">Stop 1</option>
-            <option value="op2">Stop 2</option>
-            <option value="op3">Stop 3</option>
-            <option value="op4">Stop 4</option>
+            {stops.map((stop, idx) => (
+              <option key={idx} value={stop}>
+                {stop}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -36,16 +49,18 @@ const SearchStop = () => {
             className="px-6 py-3 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select End Stop</option>
-            <option value="op1">Stop 1</option>
-            <option value="op2">Stop 2</option>
-            <option value="op3">Stop 3</option>
-            <option value="op4">Stop 4</option>
+            {stops.map((stop, idx) => (
+              <option key={idx} value={stop}>
+                {stop}
+              </option>
+            ))}
           </select>
         </div>
       </div>
 
       {/* Button below */}
       <button
+        onClick={handleSearch}
         className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition"
       >
         Search

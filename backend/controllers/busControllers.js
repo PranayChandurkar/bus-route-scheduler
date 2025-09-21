@@ -59,48 +59,41 @@ module.exports.deleteBus = async (req, res) => {
 }
 
 
-module.exports.findBusByRoute = async (req, res) => {
-  // 1. Get 'from' and 'to' stops from the URL query parameters
-  const { from, to } = req.query;
+module.exports.searchBus = async (req, res) => {
+  const { from, to } = req.body; 
 
-  // 2. Validate the input
   if (!from || !to) {
-    return res.status(400).json({ message: 'Please provide both "from" and "to" stops.' });
+    return res.status(400).json({ message: "From and To stops are required" });
   }
 
   try {
-    // 3. Construct and execute the MongoDB query
-    const buses = await Bus.find({
-      $expr: {
-        $and: [
-          // Condition A: Ensure the 'from' stop exists in the route
-          { $ne: [{ $indexOfArray: ["$route", from] }, -1] },
-          
-          // Condition B: Check that the 'from' stop's index is less than the 'to' stop's index
-          // This elegantly handles both order and the existence of the 'to' stop.
-          // If 'to' doesn't exist, its index is -1, and the condition fails.
-          {
-            $lt: [
-              { $indexOfArray: ["$route", from] },
-              { $indexOfArray: ["$route", to] }
-            ]
-          }
-        ]
+    const routes = await Route.find({
+      stops: { $all: [from, to] }
+    });
+
+    const results = [];
+
+    routes.forEach((route) => {
+      const fromIdx = route.stops.indexOf(from);
+      const toIdx = route.stops.indexOf(to);
+
+      if (fromIdx < toIdx) {
+        route.buses.forEach((bus) => {
+          results.push({
+            bus_id: bus.bus_id,
+            registration_number: bus.registration_number,
+            route_number: route.route_number,
+            route_name: route.route_name,
+            from,
+            to
+          });
+        });
       }
     });
 
-    // 4. Handle the response based on the query result
-    if (buses.length === 0) {
-      // If no buses match, send a 404 Not Found response
-      return res.status(404).json({ message: 'No direct bus route found.' });
-    }
-
-    // If buses are found, send a 200 OK response with the data
-    res.status(200).json(buses);
-
+    res.json(results);
   } catch (error) {
-    // 5. Handle any server-side errors
-    console.error('Error finding bus route:', error);
-    res.status(500).json({ message: 'An error occurred on the server.' });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-};
+}
