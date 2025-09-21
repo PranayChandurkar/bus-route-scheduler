@@ -9,6 +9,7 @@ import BusInfo from './pages/BusInfo'
 import AddBus from './pages/Bus/AddBus'
 import BusRouteInfo from './components/BusInfo/BusRouteInfo'
 import SearchStop from './components/Search/SearchStop'
+import SearchDestination from './components/Search/SearchDestination'
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/admin/buses/add' element = {<AddBus />} />
         <Route path='/admin/stops' element = {<Login />} />
         <Route path="/search-stop" element={<SearchStop />} />
+        <Route path="/search-desti" element={<SearchDestination />} />
       </Routes>
     </div>
   )
