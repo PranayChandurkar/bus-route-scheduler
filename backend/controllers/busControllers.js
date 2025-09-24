@@ -1,7 +1,6 @@
 const busModel = require("../models/busModel")
 const busServices = require("../services/busServices")
 
-
 module.exports.createBus = async (req, res) => {
     try {
         const bus = await busServices.createBus(req.body)
@@ -67,7 +66,7 @@ module.exports.searchBus = async (req, res) => {
   }
 
   try {
-    const routes = await Route.find({
+    const routes = await busModel.find({
       stops: { $all: [from, to] }
     });
 
