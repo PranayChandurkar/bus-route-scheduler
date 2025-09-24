@@ -10,9 +10,6 @@ const BusRouteInfo = () => {
   const { busInfo } = useContext(BusInfoContext)
   const {busId} = useParams()
 
-  // const fetchRoute = async () => {
-  //   const
-  // }
 
   const selectedBus = busInfo.find(bus => bus._id === busId);
   
@@ -21,11 +18,10 @@ const BusRouteInfo = () => {
   }
 
   const stops = selectedBus.stops.map((stop) => ({
-    name: stop.stopName,
-    arrival: stop.arrivalTime,
-    departure: stop.despatureTime
+    name: stop,
   }));
 
+  console.log(stops);
   
   return (
     <div className='flex justify-center p-4'>
@@ -44,25 +40,17 @@ const BusRouteInfo = () => {
                   <li key={index} className="flex items-start relative pl-12">
                     {/* Dot */}
                     <span
-                      className={`absolute left-1 top-2 w-4 h-4 rounded-full ${dotColor}`}
+                      className={`absolute left-1 top-4 w-4 h-4 rounded-full ${dotColor}`}
                     ></span>
 
                     {/* Line below (only if not last) */}
                     {!isLast && (
-                      <span className="absolute left-3 top-8 h-full w-0.5 bg-gray-300"></span>
+                      <span className="absolute left-3 top-9 h-full w-0.5 bg-gray-300"></span>
                     )}
 
                     {/* Stop details */}
                     <div>
-                      <h3 className="font-semibold text-gray-900">{stop.name}</h3>
-                      <p className="text-sm text-gray-500">
-                        Arrival: {stop.arrival}
-                      </p>
-                      {stop.departure && (
-                        <p className="text-sm text-gray-500">
-                          Departure: {stop.departure}
-                        </p>
-                      )}
+                      <h3 className="font-semibold text-gray-900 m-3">{stop.name}</h3>
                     </div>
                   </li>
                 );

@@ -86,16 +86,15 @@ export const BusInfoProvider = ({ children }) => {
   const fetchBusInfo = async () => {
     try {
       const response = await axios.get("http://localhost:3000/bus/get-all-buses");
-      console.log(response.data.buses);
       setBusInfo(response.data.buses);
     } catch (error) {
       console.error("Error fetching bus info:", error);
     }
   };
 
-  useEffect(() => {
-    setBusInfo(tempInfo);
-  }, []);
+  // useEffect(() => {
+  //   setBusInfo(tempInfo);
+  // }, []);
 
   useEffect(() => {
     fetchBusInfo();
