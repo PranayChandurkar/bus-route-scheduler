@@ -57,3 +57,43 @@ module.exports.deleteBus = async (req, res) => {
         })
     }
 }
+
+
+module.exports.searchBus = async (req, res) => {
+  const { from, to } = req.body; 
+
+  if (!from || !to) {
+    return res.status(400).json({ message: "From and To stops are required" });
+  }
+
+  try {
+    const routes = await Route.find({
+      stops: { $all: [from, to] }
+    });
+
+    const results = [];
+
+    routes.forEach((route) => {
+      const fromIdx = route.stops.indexOf(from);
+      const toIdx = route.stops.indexOf(to);
+
+      if (fromIdx < toIdx) {
+        route.buses.forEach((bus) => {
+          results.push({
+            bus_id: bus.bus_id,
+            registration_number: bus.registration_number,
+            route_number: route.route_number,
+            route_name: route.route_name,
+            from,
+            to
+          });
+        });
+      }
+    });
+
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
