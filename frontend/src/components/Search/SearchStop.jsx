@@ -1,7 +1,11 @@
+<<<<<<< HEAD
+import React, { useState } from "react";
+=======
 import React, { useContext, useState } from "react";
 import { BusInfoContext } from "../../context/BusInfoContext";
 import axios from "axios";
 import BusList from "../BusInfo/BusList";
+>>>>>>> 4eeb9e74517bab7b511e7063c9ec02653d416501
 
 
 const SearchStop = ({ stops }) => {

@@ -66,7 +66,11 @@ module.exports.searchBus = async (req, res) => {
   }
 
   try {
+<<<<<<< HEAD
+    const routes = await Route.find({
+=======
     const routes = await busModel.find({
+>>>>>>> 4eeb9e74517bab7b511e7063c9ec02653d416501
       stops: { $all: [from, to] }
     });
 
