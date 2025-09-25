@@ -83,6 +83,7 @@ module.exports.searchBus = async (req, res) => {
             registration_number: bus.registration_number,
             route_number: route.route_number,
             route_name: route.route_name,
+            schedule: bus.schedule,
             from,
             to
           });
