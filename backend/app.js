@@ -14,10 +14,6 @@ connectDB()
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
-<<<<<<< HEAD
-app.use("/", homeRoute)
-=======
->>>>>>> 4eeb9e74517bab7b511e7063c9ec02653d416501
 app.use("/bus", busRoutes)
 
 
