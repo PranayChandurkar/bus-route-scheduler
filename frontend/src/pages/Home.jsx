@@ -9,12 +9,10 @@ import SearchStop from '../components/Search/SearchStop'
 
 const Home = () => {
   return (
-    <div>
-      {/* <BusList /> */}
-      <SearchDestination />
-      {/* <SearchStop /> */}
-      
-    </div>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-100">
+  <SearchDestination />
+</div>
+
   )
 }
 
