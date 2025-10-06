@@ -63,7 +63,7 @@ const SearchStop = ({ stops }) => {
           <select
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border cursor-pointer border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Start Stop</option>
             {stopList.map((stop, idx) => (
@@ -81,7 +81,7 @@ const SearchStop = ({ stops }) => {
           <select
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 border cursor-pointer border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select End Stop</option>
             {stopList.map((stop, idx) => (
@@ -96,7 +96,7 @@ const SearchStop = ({ stops }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleSearch}
-        className="px-10 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition-transform w-full md:w-auto"
+        className="px-10 py-3 cursor-pointer bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition-transform w-full md:w-auto"
       >
         Search
       </motion.button>

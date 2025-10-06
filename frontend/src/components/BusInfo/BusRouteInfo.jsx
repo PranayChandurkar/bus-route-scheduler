@@ -33,13 +33,13 @@ const BusRouteInfo = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center gap-8 p-6">
+    <div className="flex flex-col lg:flex-row justify-center gap-8 p-6 bg-gradient-to-b from-blue-100 via-white to-blue-100">
       {/* Bus Schedule Card */}
       <motion.div
         variants={cardVariants}
         initial="hidden"
         animate="show"
-        className="bg-white w-full max-w-md h-full rounded-2xl shadow-lg p-6"
+        className="bg-white cursor-pointer w-full max-w-md h-full rounded-2xl shadow-lg p-6"
       >
         <h2 className="text-xl font-bold mb-6 text-center text-blue-600">
           🕒 Bus Schedule
@@ -84,7 +84,7 @@ const BusRouteInfo = () => {
         initial="hidden"
         animate="show"
         transition={{ delay: 0.3 }}
-        className="bg-white max-w-md mx-5 rounded-2xl shadow-lg p-6"
+        className="bg-white max-w-md  mx-5 rounded-2xl shadow-lg p-6"
       >
         <h2 className="text-xl font-bold mb-6 text-center text-blue-600">
           🛣️ Route Details

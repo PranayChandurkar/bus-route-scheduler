@@ -9,7 +9,7 @@ import SearchStop from '../components/Search/SearchStop'
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-100">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-100">
   <SearchDestination />
 </div>
 

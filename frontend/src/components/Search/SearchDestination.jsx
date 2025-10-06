@@ -8,7 +8,7 @@ const SearchDestination = () => {
   const [mainArea, setMainArea] = useState("");
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-100 flex flex-col items-center">
+    <div className="relative min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-100 flex flex-col items-center">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -35,11 +35,11 @@ const SearchDestination = () => {
           Choose Route
         </label>
         <select
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setMainArea(e.target.value)}
           value={mainArea}
         >
-          <option value="">Select Main Route</option>
+          <option value="" className="cursor-pointer">Select Main Route</option>
           {busInfo.map((bus) => (
             <option key={bus._id} value={bus.route_name}>
               {bus.route_name}
