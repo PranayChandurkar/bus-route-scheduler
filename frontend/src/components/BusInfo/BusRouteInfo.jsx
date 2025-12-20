@@ -17,7 +17,6 @@ const BusRouteInfo = () => {
 
   const stops = selectedBus.stops.map((stop) => ({ name: stop }));
 
-  // Variants for animation
   const cardVariants = {
     hidden: { opacity: 0, y: -20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
@@ -33,13 +32,12 @@ const BusRouteInfo = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center gap-8 p-6 bg-gradient-to-b from-blue-100 via-white to-blue-100">
-      {/* Bus Schedule Card */}
+    <div className="flex flex-col lg:flex-row justify-center gap-8 p-6 bg-gradient-to-b from-blue-100 via-white to-blue-100 md:gap-15">
       <motion.div
         variants={cardVariants}
         initial="hidden"
         animate="show"
-        className="bg-white cursor-pointer w-full max-w-md h-full rounded-2xl shadow-lg p-6"
+        className="bg-white cursor-pointer w-full max-w-md h-full rounded-2xl shadow-lg p-6 "
       >
         <h2 className="text-xl font-bold mb-6 text-center text-blue-600">
           🕒 Bus Schedule
@@ -55,18 +53,16 @@ const BusRouteInfo = () => {
                 transition={{ duration: 0.3, delay: idx * 0.2 }}
                 className="grid grid-cols-2 gap-6 p-4 rounded-xl border border-gray-200 shadow-sm hover:scale-105 duration-300"
               >
-                {/* Forward trip */}
                 <div className="text-center">
-                  <p className="font-medium text-gray-700">Onward</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-semibold text-gray-700">Onward</p>
+                  <p className="text-sm font-medium mt-1 text-gray-500">
                     {trip.origin_departure_time} → {trip.destination_arrival_time}
                   </p>
                 </div>
 
-                {/* Return trip */}
                 <div className="text-center">
-                  <p className="font-medium text-gray-700">Return</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-semibold text-gray-700" >Return</p>
+                  <p className="text-sm font-medium mt-1 text-gray-500">
                     {trip.destination_departure_time} → {trip.origin_arrival_time}
                   </p>
                 </div>
@@ -78,15 +74,14 @@ const BusRouteInfo = () => {
         )}
       </motion.div>
 
-      {/* Route Card */}
       <motion.div
         variants={cardVariants}
         initial="hidden"
         animate="show"
         transition={{ delay: 0.3 }}
-        className="bg-white max-w-md  mx-5 rounded-2xl shadow-lg p-6"
+        className="bg-white cursor-pointer w-full max-w-md h-full rounded-2xl shadow-lg p-6 "
       >
-        <h2 className="text-xl font-bold mb-6 text-center text-blue-600">
+        <h2 className="text-xl font-bold mb-8 text-center text-blue-600">
           🛣️ Route Details
         </h2>
 
@@ -101,7 +96,7 @@ const BusRouteInfo = () => {
                 variants={listVariants}
                 initial="hidden"
                 animate="show"
-                className="flex items-start relative pl-12"
+                className="flex items-start relative pl-9 "
               >
                 <span className="absolute left-1 top-1 w-4 h-4 rounded-full bg-blue-600"></span>
 
@@ -109,7 +104,7 @@ const BusRouteInfo = () => {
                   <span className="absolute left-3 top-6 h-full w-0.5 bg-gray-300"></span>
                 )}
 
-                <div>
+                <div className="inline">
                   <h3 className="font-semibold text-gray-800">{stop.name}</h3>
                 </div>
               </motion.li>

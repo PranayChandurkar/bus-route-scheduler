@@ -21,7 +21,7 @@ const SearchStop = ({ stops }) => {
   });
 
   const onSearch = async (from, to) => {
-    const response = await axios.post("http://localhost:3000/bus/search-bus", { from, to });
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/bus/search-bus`, { from, to });
     setBus(response.data);
   };
 
@@ -50,14 +50,12 @@ const SearchStop = ({ stops }) => {
       transition={{ duration: 0.7 }}
       className="w-full max-w-3xl mt-5 flex flex-col items-center space-y-6"
     >
-      {/* From-To Select */}
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="flex flex-col md:flex-row md:items-center md:gap-6 bg-white/80 backdrop-blur-md p-5 rounded-2xl shadow-xl w-full"
       >
-        {/* From */}
         <div className="flex flex-col flex-1 mb-4 md:mb-0">
           <label className="mb-2 text-sm font-medium text-gray-700">From</label>
           <select
@@ -72,10 +70,8 @@ const SearchStop = ({ stops }) => {
           </select>
         </div>
 
-        {/* Arrow */}
         <span className="hidden md:block text-4xl font-bold text-blue-600">→</span>
 
-        {/* To */}
         <div className="flex flex-col flex-1">
           <label className="mb-2 text-sm font-medium text-gray-700">To</label>
           <select
@@ -91,17 +87,15 @@ const SearchStop = ({ stops }) => {
         </div>
       </motion.div>
 
-      {/* Search Button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleSearch}
-        className="px-10 py-3 cursor-pointer bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition-transform w-full md:w-auto"
+        className="text-xl py-3 cursor-pointer bg-blue-600 text-white font-semibold rounded-xl shadow-md hover:bg-blue-700 transition-transform w-full md:w-1/4"
       >
         Search
       </motion.button>
 
-      {/* Bus List Section */}
       <div ref={busListRef} className="w-full">
         <BusList bus={bus} />
       </div>

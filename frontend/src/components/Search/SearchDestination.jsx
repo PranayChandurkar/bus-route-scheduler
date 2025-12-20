@@ -8,30 +8,28 @@ const SearchDestination = () => {
   const [mainArea, setMainArea] = useState("");
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-100 flex flex-col items-center">
-      {/* Header */}
+    <div className="relative min-h-screen bg-gradient-to-b  from-blue-100 via-white to-blue-100 flex flex-col items-center">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="pt-10 text-center"
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-sm">
+        <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-sm ">
           City Bus Timetable
         </h1>
-        <p className="mt-2 text-gray-600 text-lg">
+        <p className="mt-2 text-gray-600 text-sm">
           Find the best route and bus for your journey 🚍
         </p>
       </motion.div>
 
-      {/* Route Select */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         className="mt-5 w-full max-w-3xl bg-white/80 backdrop-blur-md p-5 rounded-2xl shadow-xl"
       >
-        <label className="block mb-2 text-sm font-medium text-gray-700">
+        <label className="block mb-2 font-medium text-sm text-gray-700">
           Choose Route
         </label>
         <select
@@ -39,7 +37,7 @@ const SearchDestination = () => {
           onChange={(e) => setMainArea(e.target.value)}
           value={mainArea}
         >
-          <option value="" className="cursor-pointer">Select Main Route</option>
+          <option value="" className="cursor-pointer text-sm">Select Main Route</option>
           {busInfo.map((bus) => (
             <option key={bus._id} value={bus.route_name}>
               {bus.route_name}
@@ -48,7 +46,6 @@ const SearchDestination = () => {
         </select>
       </motion.div>
 
-      {/* Search Stop */}
       {mainArea && <SearchStop stops={mainArea} />}
     </div>
   );

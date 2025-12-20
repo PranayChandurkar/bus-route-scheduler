@@ -10,11 +10,9 @@ app.use(cors())
 
 connectDB()
 
-
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
 app.use("/bus", busRoutes)
-
 
 module.exports = app

@@ -61,7 +61,7 @@ const BusList = ({ bus }) => {
                 <p className="text-sm text-gray-600 mt-1">
                   {bus.from} <span className="text-blue-500">→</span> {bus.to}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="hidden text-xs text-gray-500 mt-1 md:block">
                   Route: <span className="font-medium">{bus.route_name}</span> ({bus.stops.length} stops)
                 </p>
               </div>
