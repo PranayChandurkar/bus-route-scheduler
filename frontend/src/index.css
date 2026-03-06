@@ -1,6 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-body{
-    font-family: "poppins";
+@theme {
+    --animate-blob: blob 7s infinite;
+    --font-sans: 'Outfit', sans-serif;
 }
 
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+body {
+    font-family: var(--font-sans);
+    @apply bg-slate-50 text-slate-900;
+}
+
+/* Custom premium styles */
+.glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-xl shadow-slate-200/50 rounded-3xl;
+}
+
+.premium-gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600;
+}
+
+.premium-button {
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:shadow-indigo-500/50 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center;
+}
+
+.premium-input {
+    @apply w-full px-4 py-3 bg-white/60 border border-slate-200/80 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 focus:bg-white transition-all duration-300 text-slate-700 font-medium;
+}

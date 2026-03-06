@@ -34,7 +34,7 @@ module.exports.searchBus = async (req, res) => {
       const fromIdx = route.stops.indexOf(from);
       const toIdx = route.stops.indexOf(to);
 
-      if (fromIdx < toIdx) {
+      if (fromIdx !== -1 && toIdx !== -1 && fromIdx !== toIdx) {
         route.buses.forEach((bus) => {
           results.push({
             bus_id: bus.bus_id,

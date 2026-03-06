@@ -9,7 +9,7 @@ export const BusInfoProvider = ({ children }) => {
 
   const fetchBusInfo = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/bus/get-all-buses`);
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/bus/get-all-buses`);      
       setBusInfo(response.data.buses);
     } catch (error) {
       console.error("Error fetching bus info:", error);

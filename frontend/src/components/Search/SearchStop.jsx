@@ -2,7 +2,8 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { BusInfoContext } from "../../context/BusInfoContext";
 import axios from "axios";
 import BusList from "../BusInfo/BusList";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, MapPin } from "lucide-react";
 
 const SearchStop = ({ stops }) => {
   const { busInfo } = useContext(BusInfoContext);
@@ -12,11 +13,11 @@ const SearchStop = ({ stops }) => {
   const busListRef = useRef(null);
 
   if (!stops) {
-    return <p className="text-center text-gray-500 mt-6">No stops available for the selected route.</p>;
+    return <p className="text-center text-slate-500 mt-6 font-medium">No stops available for the selected route.</p>;
   }
 
   let stopList = [];
-  busInfo.forEach((bus) => {
+  busInfo?.forEach((bus) => {
     if (stops === bus.route_name) stopList = bus.stops;
   });
 
@@ -39,7 +40,9 @@ const SearchStop = ({ stops }) => {
 
   useEffect(() => {
     if (bus && bus.length > 0 && busListRef.current) {
-      busListRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => {
+        busListRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
     }
   }, [bus]);
 
@@ -48,56 +51,64 @@ const SearchStop = ({ stops }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      className="w-full max-w-3xl mt-5 flex flex-col items-center space-y-6"
+      className="w-full mt-6 flex flex-col items-center"
     >
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col md:flex-row md:items-center md:gap-6 bg-white/80 backdrop-blur-md p-5 rounded-2xl shadow-xl w-full"
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="w-full flex flex-col md:flex-row md:items-end gap-4"
       >
-        <div className="flex flex-col flex-1 mb-4 md:mb-0">
-          <label className="mb-2 text-sm font-medium text-gray-700">From</label>
+        <div className="flex-1 w-full">
+          <label className="flex items-center gap-2 mb-2 text-sm font-semibold text-slate-700">
+            <MapPin size={16} className="text-indigo-500" /> From
+          </label>
           <select
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="w-full px-3 py-2 border cursor-pointer border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="premium-input"
           >
-            <option value="">Select Start Stop</option>
+            <option value="" className="text-slate-500">Select Start Stop</option>
             {stopList.map((stop, idx) => (
-              <option key={idx} value={stop}>{stop}</option>
+              <option key={idx} value={stop} className="text-slate-800">{stop}</option>
             ))}
           </select>
         </div>
 
-        <span className="hidden md:block text-4xl font-bold text-blue-600">→</span>
+        <div className="hidden md:flex items-center justify-center pb-3 px-2">
+          <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center border border-indigo-100 shadow-sm">
+            <ArrowRight className="text-indigo-500" size={20} />
+          </div>
+        </div>
 
-        <div className="flex flex-col flex-1">
-          <label className="mb-2 text-sm font-medium text-gray-700">To</label>
+        <div className="flex-1 w-full mt-4 md:mt-0">
+          <label className="flex items-center gap-2 mb-2 text-sm font-semibold text-slate-700">
+            <MapPin size={16} className="text-purple-500" /> To
+          </label>
           <select
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="w-full px-4 py-3 border cursor-pointer border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="premium-input"
           >
-            <option value="">Select End Stop</option>
+            <option value="" className="text-slate-500">Select End Stop</option>
             {stopList.map((stop, idx) => (
-              <option key={idx} value={stop}>{stop}</option>
+              <option key={idx} value={stop} className="text-slate-800">{stop}</option>
             ))}
           </select>
         </div>
+
+        <motion.button
+          onClick={handleSearch}
+          className="premium-button w-full md:w-auto px-8 py-3 mt-6 md:mt-0 h-[50px]"
+        >
+          Search Buses
+        </motion.button>
       </motion.div>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleSearch}
-        className="text-xl py-3 cursor-pointer bg-blue-600 text-white font-semibold rounded-xl shadow-md hover:bg-blue-700 transition-transform w-full md:w-1/4"
-      >
-        Search
-      </motion.button>
-
-      <div ref={busListRef} className="w-full">
-        <BusList bus={bus} />
+      <div ref={busListRef} className="w-full mt-8">
+        <AnimatePresence>
+          {bus && <BusList bus={bus} />}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
