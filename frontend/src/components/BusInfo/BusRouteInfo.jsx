@@ -121,7 +121,9 @@ const BusRouteInfo = () => {
 
             {bus?.schedule?.length > 0 ? (() => {
               const currentISTMinutes = getCurrentISTMinutes();
-              const futureSchedule = bus.schedule.filter(trip => {
+              const [showTomorrow, setShowTomorrow] = React.useState(false);
+              
+              const todaySchedule = bus.schedule.filter(trip => {
                 const onwardStart = parseTimeStr(trip.origin_departure_time);
                 const returnStart = parseTimeStr(trip.destination_departure_time);
                 // Keep the schedule if either onward or return journey starts after the current time
@@ -134,44 +136,99 @@ const BusRouteInfo = () => {
                 return isOnwardFuture || isReturnFuture;
               });
 
-              if (futureSchedule.length === 0) {
-                return (
-                  <div className="text-center py-10 bg-slate-50 rounded-2xl border border-slate-100 w-full">
-                    <p className="text-slate-500 font-medium">No schedule available for the rest of today.</p>
-                  </div>
-                );
-              }
+              const tomorrowSchedule = bus.schedule;
 
               return (
-                <div className="space-y-4">
-                  {futureSchedule.map((trip, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: idx * 0.15 + 0.3 }}
-                    className="flex flex-col sm:flex-row gap-4 p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300"
-                  >
-                    <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
-                      <p className="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">Onward</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold text-slate-800">{trip.origin_departure_time}</span>
-                        <ArrowRight size={14} className="text-slate-400" />
-                        <span className="text-lg font-bold text-slate-800">{trip.destination_arrival_time}</span>
+                <div className="space-y-8 w-full">
+                  {/* Today's Schedule */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-700 mb-4 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                      Today's Upcoming Schedule
+                    </h3>
+                    {todaySchedule.length === 0 ? (
+                      <div className="text-center py-8 bg-slate-50 rounded-2xl border border-slate-100 w-full">
+                        <p className="text-slate-500 font-medium">No more schedules available for the rest of today.</p>
                       </div>
-                    </div>
-
-                    <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
-                      <p className="text-xs font-bold text-purple-500 uppercase tracking-wider mb-2">Return</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold text-slate-800">{trip.destination_departure_time}</span>
-                        <ArrowRight size={14} className="text-slate-400" />
-                        <span className="text-lg font-bold text-slate-800">{trip.origin_arrival_time}</span>
+                    ) : (
+                      <div className="space-y-4">
+                        {todaySchedule.map((trip, idx) => (
+                          <motion.div
+                            key={`today-${idx}`}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.4, delay: idx * 0.15 + 0.3 }}
+                            className="flex flex-col sm:flex-row gap-4 p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300"
+                          >
+                            <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
+                              <p className="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">Onward</p>
+                              <div className="flex justify-between items-center">
+                                <span className="text-lg font-bold text-slate-800">{trip.origin_departure_time}</span>
+                                <ArrowRight size={14} className="text-slate-400" />
+                                <span className="text-lg font-bold text-slate-800">{trip.destination_arrival_time}</span>
+                              </div>
+                            </div>
+                            <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
+                              <p className="text-xs font-bold text-purple-500 uppercase tracking-wider mb-2">Return</p>
+                              <div className="flex justify-between items-center">
+                                <span className="text-lg font-bold text-slate-800">{trip.destination_departure_time}</span>
+                                <ArrowRight size={14} className="text-slate-400" />
+                                <span className="text-lg font-bold text-slate-800">{trip.origin_arrival_time}</span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
                       </div>
+                    )}
+                  </div>
+                  
+                  {/* Tomorrow's Schedule */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-slate-700 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                        Tomorrow's Schedule
+                      </h3>
+                      <button 
+                        onClick={() => setShowTomorrow(!showTomorrow)}
+                        className="text-sm font-medium text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"
+                      >
+                        {showTomorrow ? 'Hide' : 'Show'}
+                      </button>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
+                    
+                    {showTomorrow && (
+                      <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                        {tomorrowSchedule.map((trip, idx) => (
+                          <motion.div
+                            key={`tomorrow-${idx}`}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: idx * 0.1 }}
+                            className="flex flex-col sm:flex-row gap-4 p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300 opacity-80 hover:opacity-100"
+                          >
+                            <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
+                              <p className="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">Onward</p>
+                              <div className="flex justify-between items-center">
+                                <span className="text-lg font-bold text-slate-800">{trip.origin_departure_time}</span>
+                                <ArrowRight size={14} className="text-slate-400" />
+                                <span className="text-lg font-bold text-slate-800">{trip.destination_arrival_time}</span>
+                              </div>
+                            </div>
+                            <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
+                              <p className="text-xs font-bold text-purple-500 uppercase tracking-wider mb-2">Return</p>
+                              <div className="flex justify-between items-center">
+                                <span className="text-lg font-bold text-slate-800">{trip.destination_departure_time}</span>
+                                <ArrowRight size={14} className="text-slate-400" />
+                                <span className="text-lg font-bold text-slate-800">{trip.origin_arrival_time}</span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
               );
             })() : (
               <div className="text-center py-10 bg-slate-50 rounded-2xl border border-slate-100 w-full">

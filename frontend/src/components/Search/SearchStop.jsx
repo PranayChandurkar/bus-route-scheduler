@@ -68,7 +68,7 @@ const SearchStop = ({ stops }) => {
             onChange={(e) => setFrom(e.target.value)}
             className="premium-input"
           >
-            <option value="" className="text-slate-500">Select Start Stop</option>
+            <option value="" className="text-slate-500 cursor-pointer">Select Start Stop</option>
             {stopList.map((stop, idx) => (
               <option key={idx} value={stop} className="text-slate-800">{stop}</option>
             ))}
@@ -90,7 +90,7 @@ const SearchStop = ({ stops }) => {
             onChange={(e) => setTo(e.target.value)}
             className="premium-input"
           >
-            <option value="" className="text-slate-500">Select End Stop</option>
+            <option value="" className="text-slate-500 cursor-pointer">Select End Stop</option>
             {stopList.map((stop, idx) => (
               <option key={idx} value={stop} className="text-slate-800">{stop}</option>
             ))}
@@ -99,7 +99,7 @@ const SearchStop = ({ stops }) => {
 
         <motion.button
           onClick={handleSearch}
-          className="premium-button w-full md:w-auto px-8 py-3 mt-6 md:mt-0 h-[50px]"
+          className="premium-button w-full md:w-auto px-8 py-3 mt-6 md:mt-0 h-[50px] cursor-pointer"
         >
           Search Buses
         </motion.button>
