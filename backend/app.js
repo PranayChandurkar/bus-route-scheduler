@@ -14,8 +14,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
 app.use("/bus", busRoutes)
-app.get("/", (req, res) => {
-    res.send("Hello World!")
+
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok" })
 })
 
 module.exports = app
