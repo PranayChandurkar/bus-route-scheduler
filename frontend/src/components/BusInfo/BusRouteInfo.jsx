@@ -3,7 +3,7 @@ import { BusInfoContext } from "../../context/BusInfoContext";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Clock, MapPin } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const parseTimeStr = (timeStr) => {
   if (!timeStr) return null;
@@ -30,6 +30,7 @@ const BusRouteInfo = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { bus } = location.state || {};
+  const [showAllStops, setShowAllStops] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -43,7 +44,7 @@ const BusRouteInfo = () => {
 
   let displayStops = selectedBus?.stops || [];
 
-  if (bus && bus.from && bus.to && selectedBus) {
+  if (!showAllStops && bus && bus.from && bus.to && selectedBus) {
     const fromIndex = selectedBus.stops.findIndex(s => s.toLowerCase() === bus.from.toLowerCase());
     const toIndex = selectedBus.stops.findIndex(s => s.toLowerCase() === bus.to.toLowerCase());
 
@@ -73,7 +74,7 @@ const BusRouteInfo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 relative overflow-hidden py-12 px-4 md:px-8">
+    <div className="min-h-[100dvh] bg-slate-50 relative overflow-hidden pt-8 pb-32 md:py-12 px-4 md:px-8">
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-blob"></div>
@@ -88,18 +89,25 @@ const BusRouteInfo = () => {
           <ArrowLeft size={18} /> Back to Search
         </button>
 
-        <div className="mb-8 text-center md:text-left">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-800 mb-2">
-            Route <span className="premium-gradient-text">{selectedBus.route_name}</span>
+        <div className="mb-10 text-center md:text-left">
+          <div className="inline-block px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs sm:text-sm font-bold tracking-wider uppercase mb-4 shadow-sm">
+             Selected Route
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-slate-800 mb-4 leading-tight">
+            <span className="premium-gradient-text pb-1 inline-block">{selectedBus.route_name}</span>
           </h1>
           {bus && (
-            <p className="text-slate-500 text-lg flex items-center justify-center md:justify-start gap-2">
-              <span className="font-semibold text-slate-700">{bus.registration_number}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-              <span>{bus.from}</span>
-              <span className="text-indigo-400">→</span>
-              <span>{bus.to}</span>
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 mt-6">
+              <span className="font-bold text-slate-800 bg-white px-4 py-1.5 rounded-xl border border-slate-200 shadow-sm text-base">
+                {bus.registration_number}
+              </span>
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-slate-300"></span>
+              <div className="flex items-center gap-2 text-[15px] sm:text-lg text-slate-600 font-medium bg-slate-100/70 px-4 py-1.5 rounded-xl border border-slate-200/50">
+                <span>{bus.from}</span>
+                <span className="text-indigo-400">→</span>
+                <span>{bus.to}</span>
+              </div>
+            </div>
           )}
         </div>
 
@@ -108,7 +116,7 @@ const BusRouteInfo = () => {
             variants={cardVariants}
             initial="hidden"
             animate="show"
-            className="w-full lg:w-1/2 glass-panel p-6 md:p-8"
+            className="w-full lg:w-1/2 glass-panel p-4 sm:p-6 md:p-8"
           >
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center shadow-sm border border-indigo-100">
@@ -158,7 +166,7 @@ const BusRouteInfo = () => {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.4, delay: idx * 0.15 + 0.3 }}
-                            className="flex flex-col sm:flex-row gap-4 p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300"
+                            className="flex flex-col sm:flex-row gap-4 p-4 sm:p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300"
                           >
                             <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
                               <p className="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">Onward</p>
@@ -205,7 +213,7 @@ const BusRouteInfo = () => {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.3, delay: idx * 0.1 }}
-                            className="flex flex-col sm:flex-row gap-4 p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300 opacity-80 hover:opacity-100"
+                            className="flex flex-col sm:flex-row gap-4 p-4 sm:p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm transition-all duration-300 opacity-80 hover:opacity-100"
                           >
                             <div className="flex-1 bg-slate-50 rounded-xl p-4 border border-slate-100">
                               <p className="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">Onward</p>
@@ -242,15 +250,25 @@ const BusRouteInfo = () => {
             initial="hidden"
             animate="show"
             transition={{ delay: 0.2 }}
-            className="w-full lg:w-1/2 glass-panel p-6 md:p-8"
+            className="w-full lg:w-1/2 glass-panel p-4 sm:p-6 md:p-8"
           >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center shadow-sm border border-purple-100">
-                <MapPin size={24} />
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center shadow-sm border border-purple-100">
+                  <MapPin size={24} />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-800">
+                  Route Details
+                </h2>
               </div>
-              <h2 className="text-2xl font-bold text-slate-800">
-                Route Details
-              </h2>
+              {bus && bus.from && bus.to && (
+                <button
+                  onClick={() => setShowAllStops(!showAllStops)}
+                  className="text-xs sm:text-sm font-bold text-purple-600 hover:text-purple-700 bg-purple-50 hover:bg-purple-100 px-4 py-2 rounded-xl transition-all duration-300 shadow-sm border border-purple-100/50 cursor-pointer"
+                >
+                  {showAllStops ? "Show My Journey" : "View Full Route"}
+                </button>
+              )}
             </div>
 
             <div className="relative wrap overflow-hidden p-2 pl-4">

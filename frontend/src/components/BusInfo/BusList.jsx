@@ -55,32 +55,34 @@ const BusList = ({ bus }) => {
             <Link
               to={`/timetable/${bus.routeId}`}
               state={{ bus }}
-              className="group flex flex-col md:flex-row justify-between items-start md:items-center p-5 rounded-2xl border border-slate-100 bg-white/60 hover:bg-white shadow-sm hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 gap-4"
+              className="group block p-3.5 sm:p-4 rounded-3xl border border-slate-200/60 bg-white hover:bg-slate-50/50 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300"
             >
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-lg shadow-sm border border-indigo-100">
+              <div className="flex justify-between items-start mb-3">
+                <div className="flex items-center gap-3 overflow-hidden">
+                  <div className="w-10 h-10 shrink-0 rounded-full bg-indigo-50 flex items-center justify-center text-lg shadow-inner border border-indigo-100/50">
                     🚌
                   </div>
-                  <p className="text-xl font-bold text-slate-800 tracking-tight">{bus.registration_number}</p>
+                  <div className="overflow-hidden">
+                    <p className="text-lg font-extrabold text-slate-800 tracking-tight truncate pb-0.5">{bus.registration_number}</p>
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium whitespace-nowrap overflow-hidden">
+                      <span className="truncate">{bus.from}</span>
+                      <span className="text-indigo-400 shrink-0">→</span>
+                      <span className="truncate">{bus.to}</span>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="flex items-center gap-2 text-sm text-slate-600 font-medium ml-1">
-                  <span>{bus.from}</span>
-                  <span className="text-indigo-400">→</span>
-                  <span>{bus.to}</span>
-                </div>
-
-                <div className="mt-3 inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-50 text-slate-500 border border-slate-100">
-                  <span className="text-indigo-500">Route:</span> {bus.route_name}
-                  <span className="w-1 h-1 rounded-full bg-slate-200 mx-1"></span>
-                  {bus.stops.length} stops
+                <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-indigo-600 group-hover:text-white flex items-center justify-center text-slate-400 transition-colors duration-300 shrink-0 shadow-sm border border-slate-100 group-hover:border-indigo-600">
+                  <span className="text-lg leading-none mb-0.5">➝</span>
                 </div>
               </div>
 
-              <div className="w-full md:w-auto flex justify-end">
-                <div className="w-10 h-10 rounded-full bg-slate-50 group-hover:bg-indigo-600 group-hover:text-white flex items-center justify-center text-slate-400 transition-colors duration-300">
-                  <span className="text-xl leading-none">➝</span>
+              <div className="mt-3 pt-3 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div className="text-[11px] font-medium text-slate-600 leading-snug pr-2 line-clamp-2 w-full">
+                  <span className="text-indigo-600 font-bold mr-1">ROUTE:</span> 
+                  {bus.route_name}
+                </div>
+                <div className="inline-flex items-center justify-center px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold tracking-wider border border-slate-200/60 shrink-0 shadow-sm whitespace-nowrap mt-1 sm:mt-0">
+                  {bus.stops.length} STOPS
                 </div>
               </div>
             </Link>

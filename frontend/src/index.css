@@ -15,7 +15,8 @@
 
 body {
     font-family: var(--font-sans);
-    @apply bg-slate-50 text-slate-900;
+    min-height: 100dvh;
+    @apply bg-slate-50 text-slate-900 overflow-x-hidden;
 }
 
 /* Custom premium styles */
