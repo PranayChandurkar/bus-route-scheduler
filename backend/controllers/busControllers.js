@@ -2,7 +2,7 @@ const busModel = require("../models/busModel")
 
 module.exports.getAllBuses = async (req, res) => {
     try {
-        const buses = await busModel.find()
+        const buses = await busModel.find().lean()
         res.status(200).json({
             success : true,
             message : "Buses fetched successfully",
@@ -26,7 +26,7 @@ module.exports.searchBus = async (req, res) => {
   try {
     const routes = await busModel.find({
       stops: { $all: [from, to] }
-    });
+    }).lean();
 
     const results = [];
 

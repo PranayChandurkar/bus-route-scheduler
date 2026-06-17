@@ -20,7 +20,7 @@ const routeSchema = new mongoose.Schema({
     route_name: String, 
     distance_km: Number, 
     
-    stops: [String], 
+    stops: { type: [String], index: true }, 
     
     buses: [busSchema] 
 });

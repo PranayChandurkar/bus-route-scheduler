@@ -5,7 +5,13 @@ import { motion } from "framer-motion";
 
 const SearchDestination = () => {
   const { busInfo } = useContext(BusInfoContext);
-  const [mainArea, setMainArea] = useState("");
+  const [mainArea, setMainArea] = useState(() => {
+    return sessionStorage.getItem("mainArea") || "";
+  });
+
+  React.useEffect(() => {
+    sessionStorage.setItem("mainArea", mainArea);
+  }, [mainArea]);
 
   return (
     <div className="relative w-full flex flex-col items-center">

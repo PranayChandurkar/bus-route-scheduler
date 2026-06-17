@@ -7,10 +7,29 @@ import { ArrowRight, MapPin } from "lucide-react";
 
 const SearchStop = ({ stops }) => {
   const { busInfo } = useContext(BusInfoContext);
-  const [bus, setBus] = useState(null);
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [bus, setBus] = useState(() => {
+    const saved = sessionStorage.getItem("busResults");
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [from, setFrom] = useState(() => sessionStorage.getItem("searchFrom") || "");
+  const [to, setTo] = useState(() => sessionStorage.getItem("searchTo") || "");
   const busListRef = useRef(null);
+
+  useEffect(() => {
+    sessionStorage.setItem("searchFrom", from);
+  }, [from]);
+
+  useEffect(() => {
+    sessionStorage.setItem("searchTo", to);
+  }, [to]);
+
+  useEffect(() => {
+    if (bus) {
+      sessionStorage.setItem("busResults", JSON.stringify(bus));
+    } else {
+      sessionStorage.removeItem("busResults");
+    }
+  }, [bus]);
 
   if (!stops) {
     return <p className="text-center text-slate-500 mt-6 font-medium">No stops available for the selected route.</p>;
